@@ -1,25 +1,23 @@
 import "../styles.css";
 import React from "react";
-import "../styles.css"
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min";
+import CompletedToDos from "./CompletedToDos";
+import PendingToDos from "./PendingToDos";
+
 function ToDoList({ToDos, toggleToDo}) {
+
+    function handleClick(id){
+        toggleToDo(id)
+    }
+
     return (
         <>
-            <div className="container">
-                <ul>
-                    {ToDos.map((toDo) => {
-                        return (
-                            <li key={toDo.id}>
-                                <div onClick={() => toggleToDo(toDo.id)}>
-                                    {toDo.completed ? <b><strike>{toDo.title}</strike></b> :
-                                        <b><h4>{toDo.title}</h4></b>}
-                                </div>
-                            </li>
-                        )
-                    })}
-                </ul>
-            </div>
+            {ToDos.map((todo) => {
+                return(todo.completed ? <CompletedToDos key={todo.id} todo={todo} toggleToDo={handleClick}/> : <PendingToDos key={todo.id} todo={todo} toggleToDo={handleClick}/>)
+            })}
         </>
-    );
+    )
 }
 
 export default ToDoList;
